@@ -1,10 +1,11 @@
 const express = require("express");
 const { response, request, json } = require("express");
+const cors = require("cors")
 
 const usersList = [
   {
     id: 1,
-    first_name: "Nicola",
+    first_name: "Nicole",
     last_name: "Sharples",
     email: "nsharples0@paypal.com",
     phone: "483-388-1139",
@@ -78,6 +79,7 @@ const port = 3001;
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.get("/users", (request, response) => {
   return response.json(usersList);
@@ -99,7 +101,7 @@ app.patch("/users/:id", (request, response) => {
 
   const updatedUser = { id, first_name, last_name, email, phone };
 
-  const index = usersList.findIndex(user => user.id === id);
+  const index = usersList.findIndex(user => user.id == id);
 
   if(index < 0) {
     return response.status(404).json({ message: "User not found" });
